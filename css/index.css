@@ -1,0 +1,65 @@
+body {
+  background-color: #023;
+}
+.container {
+  width: 800px;
+  background-color: #0bd;
+  border-color: #069;
+  border-width: 5px;
+  border-style: solid;
+}
+p {
+  font-family: sans-serif;
+  border-color: #069;
+}
+.title {
+  font-family: sans-serif;
+  color: #36f;
+  font-size: 50px;
+}
+.gameContainer {
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-bottom: 10px;
+  border-color: #069;
+  background-color: #000;
+  border-width: 5px;
+  border-style: solid;
+}
+.gameContent{
+  width: 500px;
+  height: 500px;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  border-color: #36f;
+  background-color: #000;
+  border-width: 5px;
+  border-style: solid;
+}
+.image{
+  position: absolute;
+  color: white;
+  opacity: 0.2;
+  margin-top: 150px;
+  margin-left: 200px;
+}
+#start{
+  position: relative;
+  width: 50px;
+  height: 25px;
+  margin-left: 0px;
+  margin-top: 0px;
+  margin-bottom: 10px;
+  border-color: #069;
+  border-width: 3px;
+  border-style: solid;
+  cursor: pointer;
+}
+#startText{
+  font-family: sans-serif;
+  color: #069;
+  margin-top: 5px;
+  font-size: 10px;
+}
