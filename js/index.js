@@ -2,8 +2,12 @@ var dead = false
 var myGamePiece;
 var myObstacles = [];
 var myScore;
+var myHighScore;
 var myGameOver;
+var speedOfDrip = 3;
 var score = 0;
+var highScore = 0;
+var hasPressed = false;
 var audio = new Audio('music.wav');
 
 audio.addEventListener('ended', function() {
@@ -16,8 +20,10 @@ audio.addEventListener('ended', function() {
 function startGame() {
     myGamePiece = new component(30, 30, "white", 235, 450);
     myGamePiece.gravity = 0.05;
-    myScore = new component("30px", "Consolas", "white", 280, 40, "text");
+    myScore = new component("30px", "Comic Sans MS", "white", 280, 40, "text");
     myScore.color = "#fff";
+    myHighScore = new component("30px", "Comic Sans MS", "white", 188, 80, "text");
+    myHighScore.color = "#fff";
     myGameArea.start();
     audio.play();
 }
@@ -30,7 +36,10 @@ var myGameArea = {
         this.context = this.canvas.getContext("2d");
         document.getElementById('gameContent').appendChild(this.canvas);
         this.frameNo = 0;
-        this.interval = setInterval(updateGameArea, 20);
+        if (hasPressed == false) {
+          this.interval = setInterval(updateGameArea, 20);
+          hasPressed = true;
+        }
         },
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -105,6 +114,9 @@ function updateGameArea() {
         if (myGamePiece.crashWith(myObstacles[i])) {
           myObstacles.splice(i, 1);
           score += 1
+          if (score > highScore) {
+            highScore += 1
+          }
         }
         if (myObstacles[i].y > myGameArea.canvas.height+20) {
           myObstacles.splice(i, 1);
@@ -124,12 +136,26 @@ function updateGameArea() {
         myObstacles[i].update();
     }
     myScore.text="SCORE: " + score;
+    // speedOfDrip += 0.01;
     myScore.update();
+    myHighScore.text="HIGH SCORE: " + highScore;
+    myHighScore.update();
+    if (leftKey == true) {
+      myGamePiece.speedX = -5.25;
+    }
+    if (rightKey == true) {
+      myGamePiece.speedX = 5.25;
+    }
+    if (rightKey == false) {
+      if (leftKey == false) {
+        myGamePiece.speedX = 0;
+      }
+    }
     myGamePiece.newPos();
     myGamePiece.update();
   }
   else {
-    myGameOver = new component("50px", "Consolas", "white", 140, 250, "text");
+    myGameOver = new component("50px", "Comic Sans MS", "white", 140, 250, "text");
     myGameOver.text="Game Over";
     myGameOver.update();
   }
@@ -137,6 +163,8 @@ function updateGameArea() {
 
 document.onkeydown = checkKey;
 document.onkeyup = stopKey;
+var rightKey = false;
+var leftKey = false;
 
 function checkKey(e) {
     key = e || window.event;
@@ -144,12 +172,14 @@ function checkKey(e) {
     if (key.keyCode == '37') {
        // left arrow
        // console.log("Left");
-       myGamePiece.speedX = -5.25;
+       // myGamePiece.speedX = -5.25;
+       leftKey = true;
     }
     else if (key.keyCode == '39') {
        // right arrow
        // console.log("Right");
-       myGamePiece.speedX = 5.25;
+       // myGamePiece.speedX = 5.25;
+       rightKey = true;
     }
 
 }
@@ -160,12 +190,14 @@ function stopKey(e) {
    if (key.keyCode == '37') {
        // left arrow
        // console.log("Left");
-       myGamePiece.speedX = 0;
+       // myGamePiece.speedX = 0
+       leftKey = false;
     }
     else if (key.keyCode == '39') {
        // right arrow
        // console.log("Right");
-       myGamePiece.speedX = 0;
+       // myGamePiece.speedX = 0;
+       rightKey = false;
     }
 }
 
@@ -175,4 +207,13 @@ function everyinterval(n) {
 }
 
 start.onclick = function() {
+  dead = false
+  myGamePiece;
+  myObstacles = [];
+  myScore;
+  myGameOver;
+  speedOfDrip = 3;
+  score = 0;
+  audio.currentTime = 0;
+  startGame()
 }

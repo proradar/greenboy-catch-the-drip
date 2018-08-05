@@ -10,9 +10,14 @@ body {
 }
 p {
   font-family: sans-serif;
-  border-color: #069;
+  color: #36f;
 }
 .title {
+  font-family: sans-serif;
+  color: #36f;
+  font-size: 50px;
+}
+.highlight {
   font-family: sans-serif;
   color: #36f;
   font-size: 50px;
