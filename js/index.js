@@ -1,5 +1,6 @@
 var dead = false
 var myGamePiece;
+var myGamePiecePic;
 var myObstacles = [];
 var myScore;
 var myHighScore;
@@ -9,6 +10,8 @@ var score = 0;
 var highScore = 0;
 var hasPressed = false;
 var audio = new Audio('music.wav');
+var bucketPic = document.getElementById("bucketPic");
+var dripPic = document.getElementById("dripPic");
 
 audio.addEventListener('ended', function() {
     if (dead == false) {
@@ -18,8 +21,8 @@ audio.addEventListener('ended', function() {
 }, false);
 
 function startGame() {
-    myGamePiece = new component(30, 30, "white", 235, 450);
-    myGamePiece.gravity = 0.05;
+    myGamePiece = new component(30, 30, "rgba(255,255,255,0)", 235, 450);
+    myGamePiecePic = new component(0, 0, "#000", 235, 450, "image", bucketPic);
     myScore = new component("30px", "Comic Sans MS", "white", 280, 40, "text");
     myScore.color = "#fff";
     myHighScore = new component("30px", "Comic Sans MS", "white", 188, 80, "text");
@@ -46,7 +49,7 @@ var myGameArea = {
     }
 }
 
-function component(width, height, color, x, y, type) {
+function component(width, height, color, x, y, type, text) {
     this.type = type;
     this.score = 0;
     this.width = width;
@@ -55,13 +58,18 @@ function component(width, height, color, x, y, type) {
     this.speedY = 0;
     this.x = x;
     this.y = y;
+    this.text = text;
     this.update = function() {
         ctx = myGameArea.context;
         if (this.type == "text") {
             ctx.font = this.width + " " + this.height;
             ctx.fillStyle = this.color;
             ctx.fillText(this.text, this.x, this.y);
-        } else {
+        }
+        else if (this.type == "image") {
+            ctx.drawImage(this.text, this.x, this.y);
+        }
+        else {
             ctx.fillStyle = color;
             ctx.fillRect(this.x, this.y, this.width, this.height);
         }
@@ -153,6 +161,19 @@ function updateGameArea() {
     }
     myGamePiece.newPos();
     myGamePiece.update();
+    if (leftKey == true) {
+      myGamePiecePic.speedX = -5.25;
+    }
+    if (rightKey == true) {
+      myGamePiecePic.speedX = 5.25;
+    }
+    if (rightKey == false) {
+      if (leftKey == false) {
+        myGamePiecePic.speedX = 0;
+      }
+    }
+    myGamePiecePic.newPos();
+    myGamePiecePic.update();
   }
   else {
     myGameOver = new component("50px", "Comic Sans MS", "white", 140, 250, "text");
@@ -209,6 +230,7 @@ function everyinterval(n) {
 start.onclick = function() {
   dead = false
   myGamePiece;
+  myGamePiecePic;
   myObstacles = [];
   myScore;
   myGameOver;

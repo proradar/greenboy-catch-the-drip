@@ -50,6 +50,9 @@ p {
   margin-top: 150px;
   margin-left: 200px;
 }
+img {
+  display: none;
+}
 #start{
   position: relative;
   width: 50px;
