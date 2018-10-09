@@ -27,6 +27,7 @@ function startGame() {
     myScore.color = "#fff";
     myHighScore = new component("30px", "Comic Sans MS", "white", 188, 80, "text");
     myHighScore.color = "#fff";
+    myGameOver;
     myGameArea.start();
     audio.play();
 }
@@ -116,8 +117,7 @@ function component(width, height, color, x, y, type, text) {
 
 function updateGameArea() {
   if (dead == false) {
-
-    var y, height, gap, minHeight, maxHeight, minGap, maxGap;
+    
     for (i = 0; i < myObstacles.length; i += 1) {
         if (myGamePiece.crashWith(myObstacles[i])) {
           myObstacles.splice(i, 1);
@@ -178,6 +178,7 @@ function updateGameArea() {
   else {
     myGameOver = new component("50px", "Comic Sans MS", "white", 140, 250, "text");
     myGameOver.text="Game Over";
+    myGameOver.color="#fff";
     myGameOver.update();
   }
 }
